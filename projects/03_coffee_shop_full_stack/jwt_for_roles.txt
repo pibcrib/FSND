@@ -1,0 +1,17 @@
+Manager JWT: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik0xbGpvVUdvb0R6ZUdIWGNHeV93USJ9.eyJpc3MiOiJodHRwczovL3BpYmNyaWIudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwZGE2ODZlNTkzNDEzMDA2YWZlYzU2OSIsImF1ZCI6ImNvZmZlc2hvcCIsImlhdCI6MTYyNTAwNzE4MCwiZXhwIjoxNjI1MDE0MzgwLCJhenAiOiJlTEdxbTZPOGxFTUFCVE9Cc3RsbGJGcUNZTVZGV0J4byIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmRyaW5rcyIsImdldDpkcmlua3MtZGV0YWlsIiwicGF0Y2g6ZHJpbmtzIiwicG9zdDpkcmlua3MiXX0.lj5lGoI7j8C3P5b-mzmT6-A14jYuIS5K-wZ1-8c06ECdO9-kN-_x3Z7PRAM-cbvpeiOhwdapA_7IlO-npZZjh50EM2-yLcNKvCKk0a_Pzos3CdC3aJD308ASkOwU2rwE79B7vhXowIifshpWTwO94PnYLCd5z5BrcFPZYckq-HWugnNME4xKRl7PDpDjiB0cuVX5y6dyWi1mAWezm8TQmjvEx_sw4MGDFGQxfFmb8s5eqBSrNW3z9d2FKD5i-fOQ1HjZEoSdqh_IsUNoii3DadsVm4yBt3s2sNB96EXGeH94MJjoYyhoIFw4q_dttASFsfD9lmKHeMWwkFDhUHHJYw
+
+Barista JWT:
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik0xbGpvVUdvb0R6ZUdIWGNHeV93USJ9.eyJpc3MiOiJodHRwczovL3BpYmNyaWIudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwZGE2OGFjMmQ3MGM0MDA2OGVlYmZiYyIsImF1ZCI6ImNvZmZlc2hvcCIsImlhdCI6MTYyNTAwNzA0NCwiZXhwIjoxNjI1MDE0MjQ0LCJhenAiOiJlTEdxbTZPOGxFTUFCVE9Cc3RsbGJGcUNZTVZGV0J4byIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmRyaW5rcy1kZXRhaWwiXX0.R79JcaRV0NCuWM0jdoFwiRa94rsTUGxG2Ra1oR-_uu3C0ZIgrom_1pBfrxgp6PpzUH-tN-Z3lHmLVZaTJLq0LU9grk5hBA4-mRPv4HV-qfoMiwRK74peF_BnesIqKtHyFvVkK3Fu06fxR3PZS2WUcVaeg73OkAWdgYNVZ4r0JrW-N-0MUhrlNN_DqT1QgtjJamdu-wqn6xQdpZIXDMDBVSp-lX2--Zf6Uafh1j3fCIG9PBGrxIzLetXZUeu8857kX5b9-51Kut2dkKffoZsV0IqZHy855VyjbdjWVV8uDBfr_WMn-JW5GM-OzMYUTy1SHYM2E6Y1Z0Z_00bzBoLTOg
+
+      "sub": "auth0|60da68ac2d70c40068eebfbc",
+      "aud": "coffeshop",
+      "iat": 1624927301,
+      "exp": 1624934501,
+      "azp": "eLGqm6O8lEMABTOBstllbFqCYMVFWBxo",
+      "scope": "",
+      "permissions": [
+        "get:drinks-detail"
+      ]
+      }
+
+AUTH0 login URI: https://pibcrib.us.auth0.com/authorize?response_type=token&client_id=eLGqm6O8lEMABTOBstllbFqCYMVFWBxo&redirect_uri=http://localhost:8100&audience=coffeshop
