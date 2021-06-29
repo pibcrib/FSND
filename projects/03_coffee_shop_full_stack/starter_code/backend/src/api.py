@@ -4,8 +4,8 @@ from sqlalchemy import exc
 import json
 from flask_cors import CORS
 
-from database.models import db_drop_and_create_all, setup_db, Drink
-from auth.auth import AuthError, requires_auth
+from .database.models import db_drop_and_create_all, setup_db, Drink
+from .auth.auth import AuthError, requires_auth
 
 app = Flask(__name__)
 setup_db(app)
@@ -20,12 +20,16 @@ CORS(app)
 db_drop_and_create_all()
 
 # ROUTES
+
+
 #     GET /drinks
 #         it should be a public endpoint
 #         it should contain only the drink.short() data representation
 #     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
 #         or appropriate status code indicating reason for failure
 #
+
+
 @app.route('/drinks', methods=['GET'])
 def get_drinks():
     drinks = Drink.query.all()
@@ -36,17 +40,18 @@ def get_drinks():
             'drinks': [drink.short() for drink in drinks]
         })
 
-    #aborts if no drinks could be found in the database
+    # aborts if no drinks could be found in the database
     else:
         abort(404)
 
-# @TODO implement endpoint
 #     GET /drinks-detail
 #         it should require the 'get:drinks-detail' permission
 #         it should contain the drink.long() data representation
 #     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
 #         or appropriate status code indicating reason for failure
-@app.route('/drinks-detail', methods = ['GET'])
+
+
+@app.route('/drinks-detail', methods=['GET'])
 @requires_auth(permission='get:drinks-detail')
 def get_drinks_detail():
     drinks = Drink.query.all()
@@ -57,7 +62,7 @@ def get_drinks_detail():
             'drinks': [drink.long() for drink in drinks]
         })
 
-    #aborts if no drinks could be found in the database
+    # aborts if no drinks could be found in the database
     else:
         abort(404)
 
@@ -67,16 +72,18 @@ def get_drinks_detail():
 #         it should contain the drink.long() data representation
 #     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the newly created drink
 #         or appropriate status code indicating reason for failure
+
+
 @app.route('/drinks', methods=['POST'])
 @requires_auth(permission='post:drinks')
-def create_drink():  #may be errors when getting recipe values since it is unclear if recipe is passed as a string or list
+def create_drink():  # may be errors when getting recipe values since it is unclear if recipe is passed as a string or list
     body = request.get_json()
     drink = Drink(
-        title = body.get("title", None),
-        recipe = json.dumps(body.get("recipe", None))
+        title=body.get("title", None),
+        recipe=json.dumps(body.get("recipe", None))
     )
 
-    #commits new drink to the database, aborts if drink could not be added
+    # commits new drink to the database, aborts if drink could not be added
     try:
         drink.insert()
         return jsonify({
@@ -96,21 +103,22 @@ def create_drink():  #may be errors when getting recipe values since it is uncle
 #     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the updated drink
 #         or appropriate status code indicating reason for failure
 
-@app.route('/drinks/<int:drink_id>', methods = ['PATCH'])
+
+@app.route('/drinks/<int:drink_id>', methods=['PATCH'])
 @requires_auth(permission='patch:drinks')
-def update_drinks(drink_id): #DONE, check for correctness
+def update_drinks(drink_id):  # DONE, check for correctness
     drink = Drink.query.get(drink_id)
 
-    #aborts if drink with drink_id could not be found
+    # aborts if drink with drink_id could not be found
     if not drink:
         abort(404)
 
-    #updates data for a particular drink, values for title and drink remain the same if body.get returns no value for title or recipe
+    # updates data for a particular drink, values for title and drink remain the same if body.get returns no value for title or recipe
     body = request.get_json()
-    drink.title =  body.get("title", drink.title)
+    drink.title = body.get("title", drink.title)
     drink.recipe = json.dumps(body.get("recipe", drink.recipe))
 
-    #commits changes to database, throws error if there was an issue updating the drink
+    # commits changes to database, throws error if there was an issue updating the drink
     try:
         drink.update()
         return jsonify({
@@ -129,27 +137,30 @@ def update_drinks(drink_id): #DONE, check for correctness
 #     returns status code 200 and json {"success": True, "delete": id} where id is the id of the deleted record
 #         or appropriate status code indicating reason for failure
 
+
 @app.route('/drinks/<int:drink_id>', methods=['DELETE'])
 @requires_auth(permission='delete:drinks')
 def delete_drink(drink_id):
-        drink = Drink.query.get(drink_id)
+    drink = Drink.query.get(drink_id)
 
-        #aborts if drink with drink_id could not be found
-        if not drink:
-            abort(404)
+    # aborts if drink with drink_id could not be found
+    if not drink:
+        abort(404)
 
-        #deletes drink from database, throws error if there was an issue removing the drink
-        try:
-            drink.delete()
-            return jsonify({
-                'success': True,
-                'delete': drink_id
-            })
-        except Exception as e:
-            print(e)
-            abort(422)
+    # deletes drink from database, throws error if there was an issue removing the drink
+    try:
+        drink.delete()
+        return jsonify({
+            'success': True,
+            'delete': drink_id
+        })
+    except Exception as e:
+        print(e)
+        abort(422)
 
 # Error Handling
+
+
 @app.errorhandler(422)
 def unprocessable(error):
     return jsonify({
@@ -157,6 +168,7 @@ def unprocessable(error):
         "error": 422,
         "message": "unprocessable"
     }), 422
+
 
 @app.errorhandler(404)
 def resource_not_found(error):
@@ -166,6 +178,7 @@ def resource_not_found(error):
         "message": "resource not found"
     }), 404
 
+
 @app.errorhandler(400)
 def bad_request(error):
     return jsonify({
@@ -173,6 +186,7 @@ def bad_request(error):
         "error": 400,
         "message": "bad request"
     }), 400
+
 
 @app.errorhandler(405)
 def method_not_allowed(error):
@@ -182,7 +196,7 @@ def method_not_allowed(error):
         "message": "method not allowed"
     }), 405
 
-#DONE BUT CURRENT STRUCUTRE MAY BE INCORRECT
+
 @app.errorhandler(AuthError)
 def authentication_error(error):
     return jsonify({
@@ -190,5 +204,3 @@ def authentication_error(error):
         "error": error.status_code,
         "message": error.error,
     }), error.status_code
-
-app.run()
