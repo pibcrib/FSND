@@ -28,14 +28,6 @@ def create_app(test_config=None):
     # Sets up CORS. Allows '*' for origins.
     CORS(app)
 
-    @app.after_request
-    def after_request(response):
-        response.headers.add('Access-Control-Allow-Headers',
-                             'Content-Type,Authorization,true')
-        response.headers.add('Access-Control-Allow-Methods',
-                             'GET,PUT,POST,DELETE,OPTIONS')
-        return response
-
     # Uses after_request decorator to sets Access-Control-Allow
     @app.after_request
     def after_request(response):
